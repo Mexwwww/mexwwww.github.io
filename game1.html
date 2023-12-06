@@ -55,19 +55,41 @@
 									<span><img src="videos/WinterWonderRideCarMovement.gif" width="639" height="360" alt="" /></span>
 									<p></p>
 									<p>
-										To make the vehicle movement i used:
-										wheel colliders, a script i made to drive/steer,
+										To make the vehicle movement I used:
+										wheel colliders, a script I made to drive/steer,
 										clamp the max rotation so it wouldn't fall over and return the z rotation of the vehicle when in the air so it lands on its wheels
 									</p>
 									<!-- My Contributions2 -->
-									<header class="major">
+									<header class="">
 										<h2>Camera mouvement whille following the car:</h2>
 									</header>
-									<span><video width="639" height="360" controls autoplay> <source src="videos/WinterWonderRideCamera.mp4" type="video/mp4"> </video> alt="" /></span>
+
+									<video width="639" height="360" autoplay muted loop>
+										<source src="videos/WinterWonderRideCamera.mp4" type="video/mp4">
+									</video>
+
 									<p></p>
-										<p>
-											To make the Camera movement i made a script that makes the camera smoothly follow the car and get closser to the car when a wall is in the way so the camera won't go through walls
-										</p>
+									<p>
+										To make the Camera movement I made a script that makes the camera smoothly follow the car and get closser to the car when a wall is in the way so the camera won't go through walls
+									</p>
+
+									<!-- My Contributions3 -->
+									<header class="">
+										<h2>Power ups:</h2>
+									</header>
+
+									<video width="639" height="360" autoplay muted loop>
+										<source src="videos/WinterWonderRideCamera.mp4" type="video/mp4">
+									</video>
+
+									<p></p>
+									<p>
+										To make the powerups I made a script with 2 functions 1 for the speed boost and 1 for the shield power.<br>
+										The speed boost works by adding vellocity in the derection the Vehicle is going when the cooldown is over and the player hits E.<br>
+										The shield works by starting a coroutine that enebles the shield gameobject and slowly turning the transparency of the materail up.<br>
+										After some time it slowly turns the transparency down again and once it hits 0 it also turns the gameobject off.<br>
+										The player can also see how long the cooldown takes after useing a power up by looking at the bottem right of the screen.
+									</p>
 
 								</div>
 							</section>
