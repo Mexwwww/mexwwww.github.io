@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>The Play - Max Geurts</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="landing.html" class="logo"><strong>Max Geurts</strong> <span></span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Games</a></li>
+							<li><a href="landing.html">About me</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+                                <div class="inner">
+                                    <!-- small explenastion of game -->
+                                    <header class="major">
+                                        <h1>The Play</h1>
+                                    </header>
+                                    <p>This game was made in 4 weeks with c# in unity.<br> All code by me. Art from the assetstore.</p>
+                                    <video width="639" height="360" autoplay muted loop>
+                                        <source src="videos/ThePlay.mp4" type="video/mp4">
+                                    </video>
+
+                                    <p>The Play is a game where you play as the hero in a play. Your goal is to defeat the evil wizard to make the crowd happy.</p>
+
+                                    <!-- My Contributions1 -->
+                                    <header class="major">
+                                        <h1>Some of the features I made</h1>
+                                        <h2>Attack manager:</h2>
+                                    </header>
+
+                                    <video width="639" height="360" autoplay muted loop>
+                                        <source src="videos/ThePlayAttacks.mp4" type="video/mp4">
+                                    </video>
+
+                                    <p></p>
+                                    <p>
+                                        The attack manager is used to swap between attacks from the enemy and make sure they can't use some attacks when there already active.<br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        In the code below you see how I made the attack manager;
+                                    </p>
+
+                                    <h3>Attack manager</h3>
+                                    <pre><code>
+										    private IEnumerator Attackin()
+    {
+        int attack;
+
+        // Initial delay before the first attack
+        if (_Start == true)
+        {
+            yield return new WaitForSeconds((_AttackCooldown / _attackspeed) / 10);
+            _Start = false;
+        }
+        else
+        {
+            // Regular delay between attacks
+            yield return new WaitForSeconds(_AttackCooldown / _attackspeed);
+        }
+
+        // Determine which attack to perform based on current conditions
+        if (GameObject.FindGameObjectWithTag("FloorIsLava"))
+        {
+            if (FindObjectOfType< FireCircle>() != null)
+            {
+                // Choose an attack randomly, avoiding Fire Circle if Fire Circle is active
+                attack = Random.Range(1, _Attacks.Count);
+                while (attack == 2)
+                {
+                    attack = Random.Range(1, _Attacks.Count);
+                }
+                Instantiate(_Attacks[attack], _AttacksParent);
+            }
+            else
+            {
+                // Choose any attack randomly
+                attack = Random.Range(1, _Attacks.Count);
+                Instantiate(_Attacks[attack], _AttacksParent);
+            }
+        }
+        else
+        {
+            if (FindObjectOfType< FireCircle>() != null)
+            {
+                // Choose an attack randomly, avoiding Fire Circle if Fire Circle is active
+                attack = Random.Range(0, _Attacks.Count);
+                while (attack == 2)
+                {
+                    attack = Random.Range(0, _Attacks.Count);
+                }
+                Instantiate(_Attacks[attack], _AttacksParent);
+            }
+            else
+            {
+                // Choose any attack randomly
+                attack = Random.Range(0, _Attacks.Count);
+                Instantiate(_Attacks[attack], _AttacksParent);
+            }
+        }
+
+        // Trigger the appropriate animation based on the chosen attack
+        if (attack == 0)
+        {
+            _Animator.SetTrigger("Lava");
+        }
+        else if (attack == 1)
+        {
+            _Animator.SetTrigger("Meteor");
+        }
+        else
+        {
+            _Animator.SetTrigger("FireCircle");
+        }
+
+        // Recursively start the attack sequence again
+        StartCoroutine(Attackin());
+</code></pre>
+
+                                    <p>
+                                        When I was working on this code I had trubble with making it so that some attacks couldn't be activated when they where already active. After a bit I decided to do it in the way I did it now.
+                                        Because in this way it doesn't just not do the attack but makes him do a diffrent attack.
+                                    </p>
+
+                                    <!-- My Contributions2 -->
+                                    <header class="">
+                                        <h2>Meteor attack:</h2>
+                                    </header>
+
+                                    <video width="639" height="360" autoplay muted loop>
+                                        <source src="videos/ThePlayMeteor.mp4" type="video/mp4">
+                                    </video>
+
+                                    <p></p>
+                                    <p>
+                                        The meteor attack is the main attack from the ennemy.
+                                    </p>
+
+                                    <p>
+                                        <h3>MeteorAttack</h3>
+                                        <pre><code>
+    private IEnumerator MeteorAttack(RaycastHit hit)
+    {
+        // Instantiate the impact zone at the point where the meteor hits
+        GameObject thisInpacktsone = Instantiate(
+            _InpacktZone,
+            hit.point,
+            transform.rotation,
+            GameObject.FindGameObjectWithTag("AttackParent").transform
+        );
+
+        // Move the meteor to the impact point
+        while (transform.position != new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z))
+        {
+            yield return new WaitForEndOfFrame();
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z),
+                Time.deltaTime * _Speed
+            );
+        }
+
+        // Check for players within the impact zone
+        Collider[] PlayerInInpacktZone = Physics.OverlapSphere(
+            thisInpacktsone.transform.position,
+            thisInpacktsone.transform.lossyScale.x / 2,
+            _TargetMask
+        );
+
+        // If players are in the impact zone, apply damage
+        if (PlayerInInpacktZone.Length != 0)
+        {
+            foreach (Collider coll in PlayerInInpacktZone)
+            {
+                if (coll.CompareTag("Player"))
+                {
+                    // Apply damage to the player
+                    _player.GetComponent<HP>().TakeDmg(_Dmg);
+                }
+            }
+        }
+
+        // Destroy the impact zone object after dealing damage
+        Destroy(thisInpacktsone);
+
+        // Wait for 1 second before moving the meteor back to its starting position
+        yield return new WaitForSeconds(1);
+
+        // Move the meteor back to its starting position
+        while (transform.position != _startPos)
+        {
+            yield return new WaitForEndOfFrame();
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                _startPos,
+                Time.deltaTime * _Speed
+            );
+        }
+
+        // Destroy the meteor game object after it returns to the starting position
+        Destroy(gameObject);
+    }
+</code></pre>
+                                </div>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="copyright">
+								<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

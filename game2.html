@@ -43,6 +43,7 @@
 									<header class="major">
 										<h1>Hack</h1>
 									</header>
+									<p>This game was made in 4 weeks with c# in unity. <br>with 2 developers and 3 artists</p>
 									<video width="639" height="360" autoplay muted loop>
 										<source src="videos/Hack.mp4" type="video/mp4">
 									</video>
@@ -68,7 +69,42 @@
 										In the code below you see how I made the vision cone;
 									</p>
 
-									<span class="image main"><img src="images/FieldOfViewCode.png" alt="" /></span>
+									<h1>Displaying C# Code</h1>
+									<pre><code>
+	private void FieldOfViewCheck()
+	        {
+		    //sees if the player is in the radius around the robot.
+		    Collider[] rangeCecks = Physics. OverlapSphere(transform.position, _Radius, _TargetMask);
+
+		    //if the player is in the radius.
+		    if (rangeCecks.Length != 0)
+		    {
+			Transform taget = rangeCecks[0].transform;
+			Vector3 directionToTarget = (taget. position - transform.position).normalized;
+			//this makes it so the vision will only be in a surtain angle infront of the robot and not all around you.
+			if (Vector3.Angle(transform.forward, directionToTarget) < _Angle / 2)
+			{
+			    DistanceToTarget = Vector3.Distance (transform.position, taget.position);
+			    //this cecks if there are any obstructions in the line between the robot and the player and if the _Inviseble mode is false.
+			    if (!Physics.Raycast(transform.position, directionToTarget, DistanceToTarget, _ObstructionMask) && _Inviseble == false)
+			    {
+				_canSeePlayer = true
+			    else
+			    {
+				_canSeePlayer = false;
+			    }
+			}
+			else
+			{
+			    _canSeePlayer = false;
+			}
+		    }
+		    else if (_canSeePlayer == true)
+		    {
+			_canSeePlayer = false;
+		    }
+		}
+									</code></pre>
 
 									<p>
 										I don't change the color of the vision in this code because i do that in enum in a difrent script.
@@ -76,7 +112,7 @@
 
 									<!-- My Contributions2 -->
 									<header class="">
-										<h2>Enemy movement</h2>
+										<h2>Enemy movement:</h2>
 									</header>
 
 									<video width="639" height="360" autoplay muted loop>
@@ -104,7 +140,7 @@
 
 									<!-- My Contributions4 -->
 									<header class="">
-										<h2>elivator animation:</h2>
+										<h2>Elivator animation:</h2>
 									</header>
 
 									<video width="639" height="360" autoplay muted loop>
@@ -118,7 +154,7 @@
 
 									<!-- My Contributions5 -->
 									<header class="">
-										<h2>enemy states</h2>
+										<h2>Enemy states:</h2>
 									</header>
 
 									<video width="639" height="360" autoplay muted loop>

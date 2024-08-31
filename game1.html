@@ -37,76 +37,122 @@
 					<div id="main" class="alt">
 
 						<!-- One -->
-							<section id="one">
-								<div class="inner">
-									<!-- small explenastion of game -->
-									<header class="major">
-										<h1>Winter Wonder Ride</h1>
-									</header>
-									<video width="639" height="360" autoplay muted loop>
-										<source src="videos/WinterWonderLandintro.mp4" type="video/mp4">
-									</video>
+						<section id="one">
+							<div class="inner">
+								<!-- small explenastion of game -->
+								<header class="major">
+									<h1>Winter Wonder Ride</h1>
+								</header>
+								<p>This game was made in 4 weeks with c# in unity.<br> with 2 developers and 4 artists</p>
+								<video width="639" height="360" autoplay muted loop>
+									<source src="videos/WinterWonderLandintro.mp4" type="video/mp4">
+								</video>
 
-									<p>Winter Wonder Ride is a single player race game that was made in 4 weeks with c# in unity with 2 developers and 4 artists, where you can use your power up's to make it easier or be faster'. You can race against the time of other players, because all the fastest times are localy saved on the pc. The goal of the game is to make it to the end as fast as possible.</p>
+								<p>Winter Wonder Ride is a single player race game that was made in 4 weeks with c# in unity with 2 developers and 4 artists, where you can use your power up's to make it easier or be faster'. You can race against the time of other players, because all the fastest times are localy saved on the pc. The goal of the game is to make it to the end as fast as possible.</p>
 
-									<!-- My Contributions1 -->
-									<header class="major">
-										<h1>My Contributions</h1>
-										<h2>Vehicle Movement:</h2>
-									</header>
+								<!-- My Contributions1 -->
+								<header class="major">
+									<h1>My Contributions</h1>
+									<h2>Vehicle Movement:</h2>
+								</header>
 
-									<video width="639" height="360" autoplay muted loop>
-										<source src="videos/WinterWonderRideCarMovement.mp4" type="video/mp4">
-									</video>
+								<video width="639" height="360" autoplay muted loop>
+									<source src="videos/WinterWonderRideCarMovement.mp4" type="video/mp4">
+								</video>
 
-									<p></p>
-									<p>
-										To make the vehicle movement I used:
-										wheel colliders, a script I made to drive/steer,
-										clamp the max rotation so it wouldn't fall over, code for the speedometer and I made it so when the vehicle is in the air, it will return its z rotation to 0, so it will always land on its wheels.
-									</p>
-									<!-- My Contributions2 -->
+								<p></p>
+								<p>
+									To make the vehicle movement I used:
+									wheel colliders, a script I made to drive/steer,
+									clamp the max rotation so it wouldn't fall over, code for the speedometer and I made it so when the vehicle is in the air, it will return its z rotation to 0, so it will always land on its wheels.
+								</p>
+								<!-- My Contributions2 -->
+								<header class="">
+									<h2>Camera movement whille following the car:</h2>
+								</header>
+
+								<video width="639" height="360" autoplay muted loop>
+									<source src="videos/WinterWonderRideCamera.mp4" type="video/mp4">
+								</video>
+
+								<p></p>
+								<p>
+									To make the Camera movement I made a script that makes the camera smoothly follow the car and get closser to the car when a wall is in the way so the camera won't go through walls
+								</p>
+
+								<header3>In this code snippet you can see how i made the smooth camera movement.</header3>
+
+								<h1>Displaying C# Code</h1>
+								<pre><code>
+	float distanceToCar = Vector3.Distance(transform.position, _car.transform.position);
+	if (_MaxDistanceToCar - DistanceToCar < 1)
+	{
+		//moves the camera to the location it should be at, at a consistend speed
+		transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed);
+	}
+	else
+	{
+		//moves the camera to the location it should be at, at a speed that go's faster the further the car is away from the camera
+		transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed * (_MaxDistanceToCar - (_MaxDistanceToCar - distanceToCar)));
+	}
+	transform.LookAt(_car.position);
+
+	float xVelocity = _carRb.velocity.x;
+	float yVelocity = _carRb.velocity.y;
+	float zVelocity = _carRb.velocity.z;
+
+	if (xVelocity < 0)
+	{
+		xVelocity = -xVelocity;								
+	}
+
+		if (yVelocity < 0)
+	{
+		yVelocity = -yVelocity;								
+	}
+
+		if (zVelocity < 0)
+	{
+		zVelocity = -zVelocity;								
+	}
+
+	//makes it so the FOV is higer the faster the car go's
+	_cam.fieldOfView = _StartingFieldOfView + (xVelocity + yVelocity + zVelocity) / 3;
+	if (_cam.fieldOfView < StaringFieldOfView)
+	{
+		_cam.fieldOfView = _StartingVieldOfView;								
+	}
+
+</code></pre>
+
+								<header3>This code makes it so the camera follows the car and the faster the car go's the further away the camera and the higer the FOV will be.</header3>
+								<p>
+									<br>
+								<p>
+									<!-- My Contributions3 -->
 									<header class="">
-										<h2>Camera movement whille following the car:</h2>
+										<h2>Power ups:</h2>
 									</header>
 
 									<video width="639" height="360" autoplay muted loop>
-										<source src="videos/WinterWonderRideCamera.mp4" type="video/mp4">
+										<source src="videos/WinterWonderRidePowerUps.mp4" type="video/mp4">
 									</video>
 
-									<p></p>
-									<p>
-										To make the Camera movement I made a script that makes the camera smoothly follow the car and get closser to the car when a wall is in the way so the camera won't go through walls
-									</p>
+								<p></p>
+								<p>
+									To make the powerups I made a script with 2 functions 1 for the speed boost and 1 for the shield power.<br>
+									The speed boost works by adding vellocity in the derection the Vehicle is going when the cooldown is over and the player hits E.<br>
+									The shield works by starting a coroutine that enebles the shield gameobject and slowly turning the transparency of the materail up.<br>
+									After some time it slowly turns the transparency down again and once it hits 0 it also turns the gameobject off.<br>
+									The player can also see how long the cooldown takes after useing a power up by looking at the bottem right of the screen.
+								</p>
 
-									<header3>In this code snippet you can see how i made the smooth camera movement.</header3>
+								<h1>Project in git</h1>
+								<br>
+								<A HREF="https://github.com/MaxGeurts/NightRacer">Git project</A>
 
-									<span class="image main"><img src="images/CameraFollowSnipet.png" alt="" /></span>
-
-									<header3>This code makes it so the camera follows the car and the faster the car go's the further away the camera and the higer the FOV will be.</header3>
-									<p>
-										<br>
-									<p>
-										<!-- My Contributions3 -->
-										<header class="">
-											<h2>Power ups:</h2>
-										</header>
-
-										<video width="639" height="360" autoplay muted loop>
-											<source src="videos/WinterWonderRidePowerUps.mp4" type="video/mp4">
-										</video>
-
-									<p></p>
-									<p>
-										To make the powerups I made a script with 2 functions 1 for the speed boost and 1 for the shield power.<br>
-										The speed boost works by adding vellocity in the derection the Vehicle is going when the cooldown is over and the player hits E.<br>
-										The shield works by starting a coroutine that enebles the shield gameobject and slowly turning the transparency of the materail up.<br>
-										After some time it slowly turns the transparency down again and once it hits 0 it also turns the gameobject off.<br>
-										The player can also see how long the cooldown takes after useing a power up by looking at the bottem right of the screen.
-									</p>
-
-								</div>
-							</section>
+							</div>
+						</section>
 
 					</div>
 
