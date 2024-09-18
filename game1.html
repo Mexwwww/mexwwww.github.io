@@ -48,7 +48,7 @@
 									<source src="videos/WinterWonderLandintro.mp4" type="video/mp4">
 								</video>
 
-								<p>Winter Wonder Ride is a single player race game that was made in 4 weeks with c# in unity with 2 developers and 4 artists, where you can use your power up's to make it easier or be faster'. You can race against the time of other players, because all the fastest times are localy saved on the pc. The goal of the game is to make it to the end as fast as possible.</p>
+								<p>Winter Wonder Ride is a single-player racing game developed in Unity using C# over four weeks by a team of two developers and four artists. Players can use power-ups to gain an advantage by making the race easier or increasing their speed.</p>
 
 								<!-- My Contributions1 -->
 								<header class="major">
@@ -62,13 +62,11 @@
 
 								<p></p>
 								<p>
-									To make the vehicle movement I used:
-									wheel colliders, a script I made to drive/steer,
-									clamp the max rotation so it wouldn't fall over, code for the speedometer and I made it so when the vehicle is in the air, it will return its z rotation to 0, so it will always land on its wheels.
+									To implement vehicle movement, I used wheel colliders and wrote a custom script for driving and steering. I clamped the maximum rotation to prevent the vehicle from tipping over and added code for a functional speedometer. Additionally, I ensured that when the vehicle is airborne, its Z-axis rotation automatically resets to 0, allowing it to always land on its wheels
 								</p>
 								<!-- My Contributions2 -->
 								<header class="">
-									<h2>Camera movement whille following the car:</h2>
+									<h2>Camera movement while following the car:</h2>
 								</header>
 
 								<video width="639" height="360" autoplay muted loop>
@@ -77,7 +75,7 @@
 
 								<p></p>
 								<p>
-									To make the Camera movement I made a script that makes the camera smoothly follow the car and get closser to the car when a wall is in the way so the camera won't go through walls
+									I created a custom script for the camera movement, making it smoothly follow the car. The script also adjusts the camera's position by moving it closer to the car when there's a wall in the way, preventing the camera from clipping through walls.
 								</p>
 
 								<h1>Displaying C# Code</h1>
@@ -91,7 +89,7 @@
 	}
 	else
 	{
-		//moves the camera to the location it should be at, at a speed that go's faster the further the car is away from the camera
+		//moves the camera to the location it should be at, at a speed that goes faster the further the car is away from the camera
 		transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed * (_MaxDistanceToCar - (_MaxDistanceToCar - distanceToCar)));
 	}
 	transform.LookAt(_car.position);
@@ -115,7 +113,7 @@
 		zVelocity = -zVelocity;								
 	}
 
-	//makes it so the FOV is higer the faster the car go's
+	//makes it so the FOV is higer the faster the car goes
 	_cam.fieldOfView = _StartingFieldOfView + (xVelocity + yVelocity + zVelocity) / 3;
 	if (_cam.fieldOfView < StaringFieldOfView)
 	{
@@ -124,7 +122,7 @@
 
 </code></pre>
 
-								<header3>This code makes it so the camera follows the car and the faster the car go's the further away the camera and the higer the FOV will be.</header3>
+								<header3>This code makes it so the camera follows the car and the faster the car goes the further away the camera and the higer the FOV will be.</header3>
 								<p>
 									<br>
 								<p>
@@ -139,11 +137,11 @@
 
 								<p></p>
 								<p>
-									To make the powerups I made a script with 2 functions 1 for the speed boost and 1 for the shield power.<br>
+									To make the powerups I made a script with 2 functions: 1 for the speed boost and 1 for the shield power.<br>
 									The speed boost works by adding vellocity in the derection the Vehicle is going when the cooldown is over and the player hits E.<br>
-									The shield works by starting a coroutine that enebles the shield gameobject and slowly turning the transparency of the materail up.<br>
-									After some time it slowly turns the transparency down again and once it hits 0 it also turns the gameobject off.<br>
-									The player can also see how long the cooldown takes after useing a power up by looking at the bottem right of the screen.
+									The shield works by starting a coroutine that activates the shield GameObject and gradually increases the material's transparency.<br>
+									After a set duration, the transparency slowly decreases, and once it reaches 0, the shield GameObject is deactivated. <br>
+									The player can track the cooldown time after using a power-up by checking the bottom right of the screen.
 								</p>
 
 								<h1>Project in git</h1>
