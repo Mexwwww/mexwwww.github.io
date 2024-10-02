@@ -84,40 +84,25 @@
 	float distanceToCar = Vector3.Distance(transform.position, _car.transform.position);
 	if (_MaxDistanceToCar - DistanceToCar < 1)
 	{
-		//moves the camera to the location it should be at, at a consistend speed
-		transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed);
+	//moves the camera to the location it should be at, at a consistend speed
+	transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed);
 	}
 	else
 	{
-		//moves the camera to the location it should be at, at a speed that goes faster the further the car is away from the camera
-		transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed * (_MaxDistanceToCar - (_MaxDistanceToCar - distanceToCar)));
+	//moves the camera to the location it should be at, at a speed that goes faster the further the car is away from the camera
+	transform.position = Vector3.lerp(transform.position, _camFollowPoint.transform.position, _smoothSpeed * (_MaxDistanceToCar - (_MaxDistanceToCar - distanceToCar)));
 	}
 	transform.LookAt(_car.position);
 
-	float xVelocity = _carRb.velocity.x;
-	float yVelocity = _carRb.velocity.y;
-	float zVelocity = _carRb.velocity.z;
-
-	if (xVelocity < 0)
-	{
-		xVelocity = -xVelocity;								
-	}
-
-		if (yVelocity < 0)
-	{
-		yVelocity = -yVelocity;								
-	}
-
-		if (zVelocity < 0)
-	{
-		zVelocity = -zVelocity;								
-	}
+	float xVelocity = Mathf.abs(_carRb.velocity.x);
+	float yVelocity = Mathf.abs(_carRb.velocity.y);
+	float zVelocity = Mathf.abs(_carRb.velocity.z);
 
 	//makes it so the FOV is higer the faster the car goes
 	_cam.fieldOfView = _StartingFieldOfView + (xVelocity + yVelocity + zVelocity) / 3;
 	if (_cam.fieldOfView < StaringFieldOfView)
 	{
-		_cam.fieldOfView = _StartingVieldOfView;								
+	_cam.fieldOfView = _StartingVieldOfView;
 	}
 
 </code></pre>
